@@ -3,21 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GX Sync Pro | Ultra Auto-Detector</title>
+    <title>GX Sync Pro | Fix Mode</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
         :root { 
             --primary: #3b82f6; 
-            --bg: #0f172a; /* একটু হালকা নীলচে কালো */
+            --bg: #0f172a; 
             --card: rgba(30, 41, 59, 0.7); 
         }
         body {
             background-color: var(--bg);
             color: #f1f5f9;
             font-family: 'Plus Jakarta Sans', sans-serif;
-            /* ব্যাকগ্রাউন্ড গ্রেডিয়েন্ট আরও উজ্জ্বল করা হয়েছে */
             background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 100%);
             min-height: 100vh;
         }
@@ -25,89 +24,64 @@
             background: var(--card);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
         .custom-input, .code-area {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #e2e8f0;
-            transition: all 0.3s ease;
+            background: rgba(15, 23, 42, 0.6) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            color: white !important;
         }
         .custom-input:focus, .code-area:focus {
-            border-color: var(--primary);
+            border-color: var(--primary) !important;
             outline: none;
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
-            background: rgba(15, 23, 42, 0.8);
         }
-        .list-card { 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-            border-left-width: 5px;
-        }
-        .list-card:hover { 
-            transform: translateY(-5px); 
-            background: rgba(51, 65, 85, 0.8);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
+        .list-card { transition: all 0.3s ease; border-left-width: 5px; }
+        .list-card:hover { transform: translateY(-3px); background: rgba(51, 65, 85, 0.8); }
     </style>
 </head>
 <body class="p-4 md:p-10">
 
     <div class="max-w-6xl mx-auto">
         <header class="mb-12 text-center">
-            <div class="inline-block">
-                <h1 class="text-5xl font-black italic text-white uppercase tracking-tighter inline-flex items-center justify-center">
-                    GX<span class="text-blue-500 text-6xl">.</span>SYNC
-                </h1>
-                <p class="text-blue-400 text-[11px] uppercase font-bold tracking-[5px] mt-2 opacity-80">Universal Intelligence System</p>
-            </div>
-            <div class="mt-6 flex justify-center">
-                <span id="counter" class="bg-blue-500/10 text-blue-400 px-6 py-2 rounded-full text-xs font-black border border-blue-500/20 shadow-lg shadow-blue-500/5">
-                    0 ITEMS DISCOVERED
-                </span>
+            <h1 class="text-5xl font-black italic text-white uppercase tracking-tighter">
+                GX<span class="text-blue-500 text-6xl">.</span>SYNC
+            </h1>
+            <p class="text-blue-400 text-[11px] uppercase font-bold tracking-[5px] mt-2">Intelligence System</p>
+            <div class="mt-6">
+                <span id="counter" class="bg-blue-500/10 text-blue-400 px-6 py-2 rounded-full text-xs font-black border border-blue-500/20">0 ITEMS</span>
             </div>
         </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
-            <div class="lg:col-span-5 space-y-8">
-                <div class="premium-glass p-8 rounded-[3rem]">
-                    <h2 class="text-xs font-black text-blue-400 uppercase tracking-widest mb-8 flex items-center gap-2">
-                        <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span> Quick Entry
-                    </h2>
-                    <div class="space-y-5">
-                        <input type="text" id="title" placeholder="Content Title" class="custom-input w-full p-5 rounded-2xl text-sm">
-                        <input type="text" id="link" placeholder="Source URL (https://...)" class="custom-input w-full p-5 rounded-2xl text-sm">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div class="lg:col-span-5 space-y-6">
+                <div class="premium-glass p-8 rounded-[2.5rem]">
+                    <h2 class="text-xs font-bold text-blue-400 uppercase mb-6">Quick Entry</h2>
+                    <div class="space-y-4">
+                        <input type="text" id="title" placeholder="Title" class="custom-input w-full p-4 rounded-xl">
+                        <input type="text" id="link" placeholder="Link (https://...)" class="custom-input w-full p-4 rounded-xl">
                         <div class="grid grid-cols-2 gap-4">
-                            <select id="cat" class="custom-input w-full p-5 rounded-2xl text-sm cursor-pointer text-white">
-                                <option value="app">🚀 Application</option>
-                                <option value="file">📁 Secure File</option>
-                                <option value="web">🌐 Web Resource</option>
+                            <select id="cat" class="custom-input w-full p-4 rounded-xl text-white">
+                                <option value="app">🚀 App</option>
+                                <option value="file">📁 File</option>
+                                <option value="web">🌐 Web</option>
                             </select>
-                            <div class="relative group">
-                                <input type="color" id="color" value="#3b82f6" class="w-full h-[60px] bg-transparent border-none cursor-pointer rounded-2xl overflow-hidden">
-                                <div class="absolute inset-0 flex items-center justify-center pointer-events-none text-[10px] font-bold uppercase opacity-50">Theme</div>
-                            </div>
+                            <input type="color" id="color" value="#3b82f6" class="w-full h-[54px] bg-transparent border-none cursor-pointer">
                         </div>
                         <input type="hidden" id="edit-index" value="-1">
-                        <button onclick="handleSave()" id="save-btn" class="w-full py-5 bg-blue-600 text-white font-black uppercase tracking-widest rounded-2xl hover:bg-blue-500 hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-300 active:scale-95">
-                            Sync to Database
-                        </button>
+                        <button onclick="handleSave()" id="save-btn" class="w-full py-4 bg-blue-600 text-white font-bold uppercase rounded-xl hover:bg-blue-500 transition-all">Save Now</button>
                     </div>
                 </div>
 
-                <div class="premium-glass p-7 rounded-[3rem]">
-                    <div class="flex justify-between items-center mb-5 px-2">
-                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Raw Intelligence Sync</span>
-                        <button onclick="copyCode()" id="copy-btn" class="text-[10px] bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-xl font-bold transition-all">COPY JSON</button>
+                <div class="premium-glass p-6 rounded-[2.5rem]">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-[10px] font-bold text-gray-400 uppercase">Paste Area</span>
+                        <button onclick="copyCode()" id="copy-btn" class="text-[10px] bg-white/10 text-white px-3 py-1 rounded-lg">COPY JSON</button>
                     </div>
-                    <textarea id="json-box" class="code-area w-full h-56 p-6 rounded-2xl font-mono text-[11px] text-blue-300 leading-relaxed" placeholder="Paste link, JSON, or any text data here..."></textarea>
+                    <textarea id="json-box" class="code-area w-full h-48 p-4 rounded-xl font-mono text-xs" placeholder="Paste link or JSON here..."></textarea>
                 </div>
             </div>
 
             <div class="lg:col-span-7">
-                <div id="list-container" class="space-y-5 max-h-[80vh] overflow-y-auto pr-4 custom-scrollbar">
-                </div>
+                <div id="list-container" class="space-y-4 max-h-[75vh] overflow-y-auto pr-2"></div>
             </div>
         </div>
     </div>
@@ -118,6 +92,7 @@
 
         window.onload = () => renderUI(true);
 
+        // অটো ডিটেক্ট (পেস্ট করলেই কাজ করবে)
         jsonBox.addEventListener('input', () => {
             const val = jsonBox.value.trim();
             if(!val) return;
@@ -126,48 +101,30 @@
                 if (Array.isArray(parsed)) {
                     dataStore = parsed;
                     saveData(false);
-                    return;
                 }
             } catch (e) {
-                autoExtract(val);
+                const urlPattern = /(https?:\/\/[^\s]+)/g;
+                const foundUrls = val.match(urlPattern);
+                if (foundUrls) {
+                    foundUrls.forEach(url => {
+                        dataStore.unshift({ title: "New Resource", link: url, cat: "web", color: "#3b82f6" });
+                    });
+                    saveData(true);
+                }
             }
         });
-
-        function autoExtract(text) {
-            const urlPattern = /(https?:\/\/[^\s]+)/g;
-            const foundUrls = text.match(urlPattern);
-            if (foundUrls) {
-                foundUrls.forEach((url, i) => {
-                    let name = "Source " + (dataStore.length + 1);
-                    try {
-                        const urlObj = new URL(url);
-                        name = urlObj.hostname.replace('www.', '').split('.')[0];
-                        name = name.charAt(0).toUpperCase() + name.slice(1);
-                    } catch(e) {}
-                    dataStore.unshift({ title: name, link: url, cat: "web", color: "#3b82f6" });
-                });
-                saveData(true);
-            }
-        }
 
         function handleSave() {
             const title = document.getElementById('title').value;
             const link = document.getElementById('link').value;
             const index = document.getElementById('edit-index').value;
-            if (!title || !link) return alert("All fields are mandatory!");
+            if (!title || !link) return alert("Please fill fields!");
 
-            const item = { 
-                title, 
-                link, 
-                cat: document.getElementById('cat').value, 
-                color: document.getElementById('color').value 
-            };
+            const item = { title, link, cat: document.getElementById('cat').value, color: document.getElementById('color').value };
 
             if (index === "-1") dataStore.unshift(item);
-            else { 
-                dataStore[index] = item; 
-                resetForm(); 
-            }
+            else { dataStore[index] = item; resetForm(); }
+
             saveData(true);
             document.getElementById('title').value = '';
             document.getElementById('link').value = '';
@@ -176,26 +133,22 @@
         function renderUI(updateBox = false) {
             const list = document.getElementById('list-container');
             list.innerHTML = '';
-            document.getElementById('counter').innerText = `${dataStore.length} ITEMS DISCOVERED`;
-
-            if (dataStore.length === 0) {
-                list.innerHTML = `<div class="p-20 text-center text-gray-500 italic opacity-50">Intelligence Core Empty...</div>`;
-            }
+            document.getElementById('counter').innerText = `${dataStore.length} ITEMS`;
 
             dataStore.forEach((item, index) => {
                 list.innerHTML += `
-                    <div class="list-card premium-glass p-7 rounded-[2.5rem] flex items-center justify-between gap-6 border-l-[6px]" style="border-left-color: ${item.color || '#3b82f6'}">
+                    <div class="list-card premium-glass p-6 rounded-[2rem] flex items-center justify-between gap-4 border-l-4" style="border-left-color: ${item.color || '#3b82f6'}">
                         <div class="flex-1 min-w-0">
-                            <span class="text-[9px] font-black uppercase text-blue-400 bg-blue-400/10 px-3 py-1 rounded-lg border border-blue-400/20">${item.cat || 'item'}</span>
-                            <h3 class="text-xl font-bold text-white truncate mt-2 tracking-tight">${item.title || item.name || "Untitled"}</h3>
-                            <p class="text-[11px] text-gray-400 truncate font-mono mt-1 opacity-70">${item.link || item.url || "#"}</p>
+                            <span class="text-[9px] font-black uppercase text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded">${item.cat || 'item'}</span>
+                            <h3 class="text-lg font-bold text-white truncate mt-1">${item.title || "Untitled"}</h3>
+                            <p class="text-[10px] text-gray-400 truncate mt-1">${item.link || "#"}</p>
                         </div>
-                        <div class="flex gap-3">
-                            <button onclick="editItem(${index})" class="p-4 bg-white/5 hover:bg-yellow-500/20 text-yellow-500 rounded-2xl transition-all border border-white/5">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2.5" stroke-linecap="round"></path></svg>
+                        <div class="flex gap-2">
+                            <button onclick="editItem(${index})" class="p-3 bg-white/5 hover:bg-yellow-500/20 text-yellow-500 rounded-xl transition-all">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2" stroke-linecap="round"></path></svg>
                             </button>
-                            <button onclick="deleteItem(${index})" class="p-4 bg-white/5 hover:bg-red-500/20 text-red-500 rounded-2xl transition-all border border-white/5">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2.5" stroke-linecap="round"></path></svg>
+                            <button onclick="deleteItem(${index})" class="p-3 bg-white/5 hover:bg-red-500/20 text-red-500 rounded-xl transition-all">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2" stroke-linecap="round"></path></svg>
                             </button>
                         </div>
                     </div>`;
@@ -208,9 +161,8 @@
             renderUI(updateBox);
         }
 
-        // ডিলিট ফাংশন ফিক্স করা হয়েছে
         function deleteItem(index) {
-            if(confirm("Confirm deletion of this intelligence data?")) {
+            if(confirm("Delete this?")) {
                 dataStore.splice(index, 1);
                 saveData(true);
             }
@@ -218,32 +170,22 @@
 
         function editItem(index) {
             const itm = dataStore[index];
-            document.getElementById('title').value = itm.title || itm.name;
-            document.getElementById('link').value = itm.link || itm.url;
-            document.getElementById('cat').value = itm.cat || 'app';
-            document.getElementById('color').value = itm.color || '#3b82f6';
+            document.getElementById('title').value = itm.title;
+            document.getElementById('link').value = itm.link;
             document.getElementById('edit-index').value = index;
-            document.getElementById('save-btn').innerText = "Update Discovery";
-            document.getElementById('save-btn').classList.replace('bg-blue-600', 'bg-yellow-600');
+            document.getElementById('save-btn').innerText = "Update Now";
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
         function resetForm() {
             document.getElementById('edit-index').value = "-1";
-            document.getElementById('save-btn').innerText = "Sync to Database";
-            document.getElementById('save-btn').classList.replace('bg-yellow-600', 'bg-blue-600');
+            document.getElementById('save-btn').innerText = "Save Now";
         }
 
         function copyCode() {
             jsonBox.select();
             document.execCommand('copy');
-            const btn = document.getElementById('copy-btn');
-            btn.innerText = "COPIED! ✅";
-            btn.classList.add('bg-blue-500');
-            setTimeout(() => {
-                btn.innerText = "COPY JSON";
-                btn.classList.remove('bg-blue-500');
-            }, 2000);
+            alert("Copied!");
         }
     </script>
 </body>
