@@ -3,16 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GX Sync Pro | Fix Mode</title>
+    <title>GX Sync Pro | Live Session Mode</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
-        :root { 
-            --primary: #3b82f6; 
-            --bg: #0f172a; 
-            --card: rgba(30, 41, 59, 0.7); 
-        }
+        :root { --primary: #3b82f6; --bg: #0f172a; --card: rgba(30, 41, 59, 0.7); }
         body {
             background-color: var(--bg);
             color: #f1f5f9;
@@ -30,12 +26,10 @@
             border: 1px solid rgba(255, 255, 255, 0.1) !important;
             color: white !important;
         }
-        .custom-input:focus, .code-area:focus {
-            border-color: var(--primary) !important;
-            outline: none;
-        }
         .list-card { transition: all 0.3s ease; border-left-width: 5px; }
         .list-card:hover { transform: translateY(-3px); background: rgba(51, 65, 85, 0.8); }
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
     </style>
 </head>
 <body class="p-4 md:p-10">
@@ -45,62 +39,71 @@
             <h1 class="text-5xl font-black italic text-white uppercase tracking-tighter">
                 GX<span class="text-blue-500 text-6xl">.</span>SYNC
             </h1>
-            <p class="text-blue-400 text-[11px] uppercase font-bold tracking-[5px] mt-2">Intelligence System</p>
-            <div class="mt-6">
-                <span id="counter" class="bg-blue-500/10 text-blue-400 px-6 py-2 rounded-full text-xs font-black border border-blue-500/20">0 ITEMS</span>
+            <p class="text-blue-400 text-[11px] uppercase font-bold tracking-[5px] mt-2">Live Session Editor</p>
+            <div class="mt-8">
+                <span id="counter" class="bg-blue-500/10 text-blue-400 px-6 py-2 rounded-full text-xs font-black border border-blue-500/20 shadow-xl">
+                    0 ITEMS IN SESSION
+                </span>
             </div>
         </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <div class="lg:col-span-5 space-y-6">
-                <div class="premium-glass p-8 rounded-[2.5rem]">
-                    <h2 class="text-xs font-bold text-blue-400 uppercase mb-6">Quick Entry</h2>
-                    <div class="space-y-4">
-                        <input type="text" id="title" placeholder="Title" class="custom-input w-full p-4 rounded-xl">
-                        <input type="text" id="link" placeholder="Link (https://...)" class="custom-input w-full p-4 rounded-xl">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            <div class="lg:col-span-5 space-y-8">
+                <div class="premium-glass p-8 rounded-[3rem]">
+                    <h2 class="text-xs font-black text-blue-400 uppercase mb-8">Quick Entry</h2>
+                    <div class="space-y-5">
+                        <input type="text" id="title" placeholder="Entry Title" class="custom-input w-full p-5 rounded-2xl text-sm">
+                        <input type="text" id="link" placeholder="Source URL" class="custom-input w-full p-5 rounded-2xl text-sm">
                         <div class="grid grid-cols-2 gap-4">
-                            <select id="cat" class="custom-input w-full p-4 rounded-xl text-white">
+                            <select id="cat" class="custom-input w-full p-5 rounded-2xl text-sm text-white">
                                 <option value="app">🚀 App</option>
                                 <option value="file">📁 File</option>
                                 <option value="web">🌐 Web</option>
                             </select>
-                            <input type="color" id="color" value="#3b82f6" class="w-full h-[54px] bg-transparent border-none cursor-pointer">
+                            <input type="color" id="color" value="#3b82f6" class="w-full h-[60px] bg-transparent border-none cursor-pointer">
                         </div>
                         <input type="hidden" id="edit-index" value="-1">
-                        <button onclick="handleSave()" id="save-btn" class="w-full py-4 bg-blue-600 text-white font-bold uppercase rounded-xl hover:bg-blue-500 transition-all">Save Now</button>
+                        <button onclick="handleSave()" id="save-btn" class="w-full py-5 bg-blue-600 text-white font-black uppercase tracking-widest rounded-2xl hover:bg-blue-500 transition-all">
+                            Add to Session
+                        </button>
                     </div>
                 </div>
 
-                <div class="premium-glass p-6 rounded-[2.5rem]">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="text-[10px] font-bold text-gray-400 uppercase">Paste Area</span>
-                        <button onclick="copyCode()" id="copy-btn" class="text-[10px] bg-white/10 text-white px-3 py-1 rounded-lg">COPY JSON</button>
+                <div class="premium-glass p-7 rounded-[3rem]">
+                    <div class="flex justify-between items-center mb-5 px-2">
+                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Live JSON Output</span>
+                        <button onclick="copyCode()" id="copy-btn" class="text-[10px] bg-white/10 text-white px-4 py-2 rounded-xl font-bold transition-all">COPY JSON</button>
                     </div>
-                    <textarea id="json-box" class="code-area w-full h-48 p-4 rounded-xl font-mono text-xs" placeholder="Paste link or JSON here..."></textarea>
+                    <textarea id="json-box" class="code-area w-full h-56 p-6 rounded-2xl font-mono text-[11px] text-blue-300 leading-relaxed" placeholder="Paste data or watch live updates..."></textarea>
                 </div>
             </div>
 
             <div class="lg:col-span-7">
-                <div id="list-container" class="space-y-4 max-h-[75vh] overflow-y-auto pr-2"></div>
+                <div id="list-container" class="space-y-5 max-h-[80vh] overflow-y-auto pr-2 custom-scrollbar"></div>
             </div>
         </div>
     </div>
 
     <script>
-        let dataStore = JSON.parse(localStorage.getItem('GX_PRO_DB')) || [];
+        // LocalStorage সম্পূর্ণ রিমুভ করা হয়েছে
+        let dataStore = [];
         const jsonBox = document.getElementById('json-box');
 
         window.onload = () => renderUI(true);
 
-        // অটো ডিটেক্ট (পেস্ট করলেই কাজ করবে)
         jsonBox.addEventListener('input', () => {
             const val = jsonBox.value.trim();
-            if(!val) return;
+            if(!val) {
+                dataStore = [];
+                renderUI(false);
+                return;
+            }
+
             try {
                 const parsed = JSON.parse(val);
                 if (Array.isArray(parsed)) {
                     dataStore = parsed;
-                    saveData(false);
+                    renderUI(false);
                 }
             } catch (e) {
                 const urlPattern = /(https?:\/\/[^\s]+)/g;
@@ -109,7 +112,7 @@
                     foundUrls.forEach(url => {
                         dataStore.unshift({ title: "New Resource", link: url, cat: "web", color: "#3b82f6" });
                     });
-                    saveData(true);
+                    renderUI(true);
                 }
             }
         });
@@ -118,14 +121,14 @@
             const title = document.getElementById('title').value;
             const link = document.getElementById('link').value;
             const index = document.getElementById('edit-index').value;
-            if (!title || !link) return alert("Please fill fields!");
+            if (!title || !link) return alert("Fill fields!");
 
             const item = { title, link, cat: document.getElementById('cat').value, color: document.getElementById('color').value };
 
             if (index === "-1") dataStore.unshift(item);
             else { dataStore[index] = item; resetForm(); }
 
-            saveData(true);
+            renderUI(true);
             document.getElementById('title').value = '';
             document.getElementById('link').value = '';
         }
@@ -133,22 +136,26 @@
         function renderUI(updateBox = false) {
             const list = document.getElementById('list-container');
             list.innerHTML = '';
-            document.getElementById('counter').innerText = `${dataStore.length} ITEMS`;
+            document.getElementById('counter').innerText = `${dataStore.length} ITEMS IN SESSION`;
+
+            if (dataStore.length === 0) {
+                list.innerHTML = `<div class="p-20 text-center text-gray-600 italic opacity-50">No items in this session. Start adding or paste JSON.</div>`;
+            }
 
             dataStore.forEach((item, index) => {
                 list.innerHTML += `
-                    <div class="list-card premium-glass p-6 rounded-[2rem] flex items-center justify-between gap-4 border-l-4" style="border-left-color: ${item.color || '#3b82f6'}">
+                    <div class="list-card premium-glass p-7 rounded-[2.5rem] flex items-center justify-between gap-4 border-l-[6px]" style="border-left-color: ${item.color || '#3b82f6'}">
                         <div class="flex-1 min-w-0">
-                            <span class="text-[9px] font-black uppercase text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded">${item.cat || 'item'}</span>
-                            <h3 class="text-lg font-bold text-white truncate mt-1">${item.title || "Untitled"}</h3>
-                            <p class="text-[10px] text-gray-400 truncate mt-1">${item.link || "#"}</p>
+                            <span class="text-[9px] font-black uppercase text-blue-400 bg-blue-400/10 px-2 py-0.5 rounded">${item.cat || 'item'}</span>
+                            <h3 class="text-xl font-bold text-white truncate mt-2">${item.title || "Untitled"}</h3>
+                            <p class="text-[11px] text-gray-500 truncate font-mono mt-1 opacity-70">${item.link || "#"}</p>
                         </div>
-                        <div class="flex gap-2">
-                            <button onclick="editItem(${index})" class="p-3 bg-white/5 hover:bg-yellow-500/20 text-yellow-500 rounded-xl transition-all">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2" stroke-linecap="round"></path></svg>
+                        <div class="flex gap-3">
+                            <button onclick="editItem(${index})" class="p-4 bg-white/5 hover:bg-yellow-500/20 text-yellow-500 rounded-2xl transition-all">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2" stroke-linecap="round"></path></svg>
                             </button>
-                            <button onclick="deleteItem(${index})" class="p-3 bg-white/5 hover:bg-red-500/20 text-red-500 rounded-xl transition-all">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2" stroke-linecap="round"></path></svg>
+                            <button onclick="deleteItem(${index})" class="p-4 bg-white/5 hover:bg-red-500/20 text-red-500 rounded-2xl transition-all">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2" stroke-linecap="round"></path></svg>
                             </button>
                         </div>
                     </div>`;
@@ -156,22 +163,17 @@
             if (updateBox) jsonBox.value = JSON.stringify(dataStore, null, 2);
         }
 
-        function saveData(updateBox) {
-            localStorage.setItem('GX_PRO_DB', JSON.stringify(dataStore));
-            renderUI(updateBox);
-        }
-
         function deleteItem(index) {
-            if(confirm("Delete this?")) {
-                dataStore.splice(index, 1);
-                saveData(true);
-            }
+            dataStore.splice(index, 1);
+            renderUI(true);
         }
 
         function editItem(index) {
             const itm = dataStore[index];
             document.getElementById('title').value = itm.title;
             document.getElementById('link').value = itm.link;
+            document.getElementById('cat').value = itm.cat;
+            document.getElementById('color').value = itm.color;
             document.getElementById('edit-index').value = index;
             document.getElementById('save-btn').innerText = "Update Now";
             window.scrollTo({top: 0, behavior: 'smooth'});
@@ -179,13 +181,15 @@
 
         function resetForm() {
             document.getElementById('edit-index').value = "-1";
-            document.getElementById('save-btn').innerText = "Save Now";
+            document.getElementById('save-btn').innerText = "Add to Session";
         }
 
         function copyCode() {
             jsonBox.select();
             document.execCommand('copy');
-            alert("Copied!");
+            const btn = document.getElementById('copy-btn');
+            btn.innerText = "COPIED! ✅";
+            setTimeout(() => btn.innerText = "COPY JSON", 2000);
         }
     </script>
 </body>
